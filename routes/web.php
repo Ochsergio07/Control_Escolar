@@ -3,6 +3,12 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AsignacionController;
+
+Route::get('/asignacion', [AsignacionController::class, 'index'])->name('asignacion.index');
+Route::get('/asignacion/periodos/{idCarrera}', [AsignacionController::class, 'getPeriodos']);
+Route::get('/asignacion/alumnos/{idPeriodo}', [AsignacionController::class, 'getAlumnos']);
+Route::post('/asignacion/asignar', [AsignacionController::class, 'asignar']);
 
 // Rutas públicas para administradores
 Route::prefix('admin')->group(function () {
