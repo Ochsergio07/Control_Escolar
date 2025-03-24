@@ -7,52 +7,116 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 
+<style>
+    .titulo-con-fondo {
+        font-size: 2rem; /* Tamaño del texto */
+        font-weight: bold; /* Negrita */
+        text-align: center; /* Centrado */
+        color: white; /* Color del texto */
+        background-color: rgba(156,41,41,0.884); /* Fondo rojo */
+        padding: 1rem 2rem; /* Padding interno */
+        border-radius: 0.5rem; /* Bordes redondeados */
+        margin-left: -2rem; /* Estira el fondo hacia la izquierda */
+        margin-right: -2rem; /* Estira el fondo hacia la derecha */
+        margin-top: -2rem; /* Mueve el título hacia arriba */
+        margin-bottom: 1.5rem; /* Margen inferior */
+        font-family: 'Roboto', sans-serif; /* Fuente para títulos */
+    }
+
+    .form-container {
+        max-width: 800px; /* Ancho máximo del contenedor */
+        width: 100%; /* Ocupa todo el ancho disponible */
+        padding: 2rem; /* Padding interno */
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* Dos columnas */
+        gap: 1rem; /* Espacio entre los campos */
+    }
+
+    .full-width {
+        grid-column: span 2; /* Ocupa dos columnas */
+    }
+</style>
+
+<style>
+    /* Estilos personalizados */
+    body {
+        font-family: 'Crimson Text', serif; /* Fuente para textos */
+    }
+
+    button {
+        background-color: rgba(4, 4, 68, 0.774); /* Color de botón */
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: rgba(4, 4, 68, 0.9); /* Efecto hover */
+    }
+</style>
+
+<style>
+    .logo-empresa {
+        width: 6rem; /* Tamaño del logo */
+        position: absolute; /* Posicionamiento absoluto */
+        top: 1rem; /* Mueve el logo hacia arriba y abajo*/
+        left: 5rem; /* Mueve el logo  */
+    }
+</style>
+
+        <!-- Cambia a "justify-start" para alinear a la izquierda -->
+        <div class="flex justify-start">
+        <!-- Logo de la empresa en la esquina superior izquierda -->
+        <img src="{{ asset('imagenes/logo cuv.png') }}" alt="Logo del Centro Universitario Valladolid" class="logo-empresa">
+        </div>
+
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-    <h1 class="text-2xl font-bold mb-6 text-center text-black-500"> Registro de Administrador </h1>
+    <div class="bg-white rounded-lg shadow-lg form-container">
+    <h1 class="titulo-con-fondo"> Registro de Administrador </h1>
 
      <!-- Formulario de Registro -->
-    <form method="POST" action="{{ route('admin.register') }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('admin.register') }}" enctype="multipart/form-data" class="form-grid">
         @csrf
 
         <!-- Nombre -->
         <div class="mb-4">
-            <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre:</label>
+            <label for="nombre" class="block text-[17px] font-medium text-gray-700">Nombre:</label>
             <input type="text" name="nombre" placeholder="Ingrese su nombre completo" required
                 class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
         </div>
 
         <!-- ApellidoP -->
         <div class="mb-4">
-            <label for="apellidoP" class="block text-sm font-medium text-gray-700">Apellido Paterno:</label>
+            <label for="apellidoP" class="block text-[17px] font-medium text-gray-700">Apellido Paterno:</label>
             <input type="text" name="apellidoP" placeholder="Ingrese su apellido" required
                 class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
         </div>
 
         <!-- ApellidoM -->
         <div class="mb-4">
-            <label for="apellidoM" class="block text-sm font-medium text-gray-700">Apellido Materno:</label>
+            <label for="apellidoM" class="block text-[17px] font-medium text-gray-700">Apellido Materno:</label>
             <input type="text" name="apellidoM" placeholder="Ingrese su apellido" required
                 class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
         </div>
 
         <!-- Correo -->
         <div class="mb-4">
-            <label for="correo" class="block text-sm font-medium text-gray-700">Correo electrónico:</label>
+            <label for="correo" class="block text-[17px] font-medium text-gray-700">Correo electrónico:</label>
             <input type="email" name="correo" placeholder="Ingrese su correo electrónico" required
             class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
         </div>
 
         <!-- Alias -->
         <div class="mb-4">
-            <label for="alias" class="block text-sm font-medium text-gray-700">Alias:</label>
+            <label for="alias" class="block text-[17px] font-medium text-gray-700">Alias:</label>
             <input type="text" name="alias" placeholder="Ingrese un alias único" required
             class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
         </div>
 
         <!-- Foto -->
         <div class="mb-4">
-            <label for="foto" class="block text-sm font-medium text-gray-700">Foto:</label>
+            <label for="foto" class="block text-[17px] font-medium text-gray-700">Foto:</label>
             <div class="mt-1 flex items-center">
                 <div class="relative">
 
@@ -75,7 +139,7 @@
 
         <!-- Nivel de Acceso -->
         <div class="mb-4">
-            <label for="nivel" class="block text-sm font-medium text-gray-700">Nivel de Acceso:</label>
+            <label for="nivel" class="block text-[17px] font-medium text-gray-700">Nivel de Acceso:</label>
             <select name="nivel" id="nivel" required
             class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
             <option value="" disabled selected>Seleccione su nivel de acceso</option>
@@ -87,16 +151,16 @@
 
 
         <!-- Contraseña -->
-        <div class="mb-6">
-            <label for="password" class="block text-sm font-medium text-gray-700">Contraseña:</label>
+        <div class="mb-4">
+            <label for="password" class="block text-[17px] font-medium text-gray-700">Contraseña:</label>
             <input type="password" name="password" placeholder="Ingresa una contraseña segura" required
                 class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
         </div>
 
         <!-- Botones registrar -->
-        <div class="flex items-center justify-between">
-        <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600">Cancelar</button>
-        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Registrar</button>
+        <div class="flex items-center justify-between full-width">
+        <button type="button" class="text-white px-4 py-2 rounded-md">Cancelar</button>
+        <button type="submit" class="text-white px-4 py-2 rounded-md">Registrar</button>
         </div>
     </form>
 </div>
