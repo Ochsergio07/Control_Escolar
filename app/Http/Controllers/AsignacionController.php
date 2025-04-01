@@ -1,64 +1,92 @@
 <?php
+
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Carrera;
 use App\Models\Periodo;
 use App\Models\Alumno;
-use Illuminate\Http\Request;
 use App\Models\Asignacion;
 use Illuminate\Support\Facades\DB;
 
-class AsignacionController extends Controller {
-    public function index() {
+class AsignacionController extends Controller
+{
+    public function index()
+    {
         $carreras = Carrera::all();
         return view('asignacion.index', compact('carreras'));
     }
 
-    public function getPeriodos($idCarrera) {
-        // Obtener los periodos asociados a la carrera
-        $periodos = Periodo::where('idcarrera', $idCarrera)->get();
-    
-        // Verificar si hay periodos
-        if ($periodos->isEmpty()) {
-            return response()->json(['message' => 'No se encontraron periodos para esta carrera.'], 404);
-        }
-    
-        return response()->json($periodos);
+    public function getPeriodos($idCarrera, Request $request)
+{
+    $query = Periodo::where('idcarrera', $idCarrera);
+
+    // Solo aplicar filtros si se solicitan (para periodo anterior)
+    if ($request->has('cuatrimestre')) {
+        $query->where('cuatrimestre', $request->cuatrimestre);
     }
 
-    public function getAlumnos($idPeriodo) {
-        // Obtener alumnos asignados al periodo a través de la tabla asignacion
-        $alumnos = Asignacion::where('idperiodo', $idPeriodo)
-            ->with('alumno') // Cargar la relación "alumno"
-            ->get()
-            ->pluck('alumno'); // Extraer los objetos alumno
-    
-        return response()->json($alumnos);
+    if ($request->has('grupo')) {
+        $query->where('grupo', $request->grupo);
     }
 
-    public function asignar(Request $request) {
-        $alumnos = $request->alumnos;
-        $nuevoPeriodo = $request->nuevo_periodo;
-    
-        // Validar que se seleccionó un periodo
-        if (!$nuevoPeriodo) {
-            return response()->json(['success' => false, 'message' => 'Seleccione un periodo válido.']);
-        }
-    
+    return response()->json($query->get());
+}
+
+    public function getCuatrimestres($idCarrera)
+    {
+        return response()->json(
+            Periodo::where('idcarrera', $idCarrera)
+                ->distinct()
+                ->orderBy('cuatrimestre')
+                ->pluck('cuatrimestre')
+        );
+    }
+
+    public function getGrupos($idCarrera)
+    {
+        return response()->json(
+            Periodo::where('idcarrera', $idCarrera)
+                ->distinct()
+                ->orderBy('grupo')
+                ->pluck('grupo')
+        );
+    }
+
+    public function getAlumnos($idPeriodo)
+    {
+        return response()->json(
+            Asignacion::where('idperiodo', $idPeriodo)
+                ->with('alumno')
+                ->get()
+                ->pluck('alumno')
+        );
+    }
+
+    public function getAlumnosSinAsignar($idCarrera)
+    {
+        return response()->json(
+            Alumno::where('idcarrera', $idCarrera)
+                ->whereDoesntHave('asignaciones')
+                ->get()
+        );
+    }
+
+    public function asignar(Request $request)
+    {
         DB::beginTransaction();
         try {
-            foreach ($alumnos as $idAlumno) {
-                // Actualizar o crear la asignación
+            foreach ($request->alumnos as $idAlumno) {
                 Asignacion::updateOrCreate(
-                    ['idalumno' => $idAlumno], // Buscar por alumno
-                    ['idperiodo' => $nuevoPeriodo] // Actualizar el periodo
+                    ['idalumno' => $idAlumno],
+                    ['idperiodo' => $request->nuevo_periodo]
                 );
             }
             DB::commit();
-            return response()->json(['success' => true, 'message' => 'Asignación exitosa.']);
+            return response()->json(['success' => true]);
         } catch (\Exception $e) {
             DB::rollback();
-            return response()->json(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
     }
 }

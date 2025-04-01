@@ -5,10 +5,16 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AsignacionController;
 
-Route::get('/asignacion', [AsignacionController::class, 'index'])->name('asignacion.index');
-Route::get('/asignacion/periodos/{idCarrera}', [AsignacionController::class, 'getPeriodos']);
-Route::get('/asignacion/alumnos/{idPeriodo}', [AsignacionController::class, 'getAlumnos']);
-Route::post('/asignacion/asignar', [AsignacionController::class, 'asignar']);
+// Asignación de Periodos
+Route::prefix('asignacion')->group(function () {
+    Route::get('/', [AsignacionController::class, 'index'])->name('asignacion.index');
+    Route::get('periodos/{idCarrera}', [AsignacionController::class, 'getPeriodos']);
+    Route::get('cuatrimestres/{idCarrera}', [AsignacionController::class, 'getCuatrimestres']);
+    Route::get('grupos/{idCarrera}', [AsignacionController::class, 'getGrupos']);
+    Route::get('alumnos/{idPeriodo}', [AsignacionController::class, 'getAlumnos']);
+    Route::get('alumnos-sin-asignar/{idCarrera}', [AsignacionController::class, 'getAlumnosSinAsignar']);
+    Route::post('asignar', [AsignacionController::class, 'asignar']);
+});
 
 // Rutas públicas para administradores
 Route::prefix('admin')->group(function () {

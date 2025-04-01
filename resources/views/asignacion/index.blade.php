@@ -4,205 +4,269 @@
     <title>Asignación de Periodos</title>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .titulo-con-fondo {
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            color: white;
+            background-color: rgba(156,41,41,0.884);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            margin-left: -2rem;
+            margin-right: -2rem;
+            margin-top: -2rem;
+            margin-bottom: 1.5rem;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+        }
+
+        button {
+            background-color: rgba(4, 4, 68, 0.774);
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: rgba(4, 4, 68, 0.9);
+        }
+
+        .logo-empresa {
+            width: 6rem;
+            position: absolute;
+            top: 1rem;
+            left: 4rem;
+        }
+
+        .filter-section {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+        }
+    </style>
 </head>
-
-<style>
-    .titulo-con-fondo {
-        font-size: 2rem; /* Tamaño del texto */
-        font-weight: bold; /* Negrita */
-        text-align: center; /* Centrado */
-        color: white; /* Color del texto */
-        background-color: rgba(156,41,41,0.884); /* Fondo rojo */
-        padding: 0.5rem 1rem; /* Padding interno */
-        border-radius: 0.5rem; /* Bordes redondeados */
-        margin-left: -2rem; /* Estira el fondo hacia la izquierda */
-        margin-right: -2rem; /* Estira el fondo hacia la derecha */
-        margin-top: -2rem; /* Mueve el título hacia arriba */
-        margin-bottom: 1.5rem; /* Margen inferior */
-        font-family: 'Roboto', sans-serif; /* Fuente para títulos */
-    }
-</style>
-
-<style>
-    /* Estilos personalizados */
-    body {
-        font-family: 'Crimson Text', serif; /* Fuente para textos */
-    }
-
-    button {
-        background-color: rgba(4, 4, 68, 0.774); /* Color de botón */
-        transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-        background-color: rgba(4, 4, 68, 0.9); /* Efecto hover */
-    }
-</style>
-
-<style>
-    .logo-empresa {
-        width: 6rem; /* Tamaño del logo */
-        position: absolute; /* Posicionamiento absoluto */
-        top: 1rem; /* Mueve el logo hacia arriba y abajo*/
-        left: 4rem; /* Mueve el logo  */
-    }
-</style>
-        <!-- Cambia a "justify-start" para alinear a la izquierda -->
-        <div class="flex justify-start">
-
-            <!-- Logo de la empresa en la esquina superior izquierda -->
-            <img src="{{ asset('imagenes/logo cuv.png') }}" alt="Logo del Centro Universitario Valladolid" class="logo-empresa">
-        </div>
 
 <body>
     <div class="bg-gray-100 flex items-center justify-center min-h-screen">
         <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-4xl">
-        <h1 class="titulo-con-fondo">Asignación de Alumnos</h1>
-        
-       <!-- Selección de Carrera -->
-<div class="mb-6">
-    <label class="block text-[17px] font-medium text-gray-700">Carrera:</label>
-    <div class="mt-1 flex items-center">
-    <select id="selectCarrera" style="width: 330px;" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-        @foreach($carreras as $carrera)
-            <option value="{{ $carrera->idcarrera }}">{{ $carrera->nombre }}</option>
-        @endforeach
-    </select>
-    <div class="flex items-center justify-between">
-    <button id="btnCargarPeriodos" class="ml-2 text-white px-4 py-2 rounded-md w-full">Buscar</button> <!-- Botón para cargar periodos -->
-</div>
- </div>
+            <div class="flex justify-start">
+                <img src="{{ asset('imagenes/logo cuv.png') }}" alt="Logo del Centro Universitario Valladolid" class="logo-empresa">
+            </div>
 
-<!-- Selección de Periodo Anterior -->
-<div class="mb-6">
-    <label class="block text-[17px] font-medium text-gray-700">Periodo Anterior:</label>
-    <select id="selectPeriodo" style="width: 300px;" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-        <option value="">Seleccione un periodo</option>
-    </select>
-    <button id="btnBuscar" class=" text-white px-4 py-2 rounded-md ml-2">Buscar Alumnos</button>
-</div>
+            <h1 class="titulo-con-fondo">Asignación de Alumnos</h1>
 
-        <!-- Lista de Alumnos -->
-        <table id="tablaAlumnos" class="min-w-full bg-white border border-gray-200 mb-6">
-            <thead>
-                <tr>
-                    <th class="py-3 px-4 border-b text-left">Seleccionar</th>
-                    <th class="py-3 px-4 border-b text-left">Nombre</th>
-                    <th class="py-3 px-4 border-b text-left">Apellidos</th>
-                </tr>
-            </thead>
+            <!-- Filtros -->
+            <div class="filter-section">
+                <!-- Selección de Carrera -->
+                <div class="mb-4">
+                    <label class="block text-[17px] font-medium text-gray-700">Carrera:</label>
+                    <div class="mt-1 flex items-center gap-2">
+                        <select id="selectCarrera" style="width: 330px;" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            @foreach($carreras as $carrera)
+                                <option value="{{ $carrera->idcarrera }}">{{ $carrera->nombre }}</option>
+                            @endforeach
+                        </select>
+                        <button id="btnCargarFiltros" class="text-white px-4 py-2 rounded-md">Cargar Filtros</button>
+                    </div>
+                </div>
 
-            <tbody>
-                <!-- Los alumnos se cargarán aquí via AJAX -->
-            </tbody>
-        </table>
+                <!-- Filtros Adicionales -->
+                <div class="grid grid-cols-2 gap-4 mt-4">
+                    <div>
+                        <label class="block text-[17px] font-medium text-gray-700">Cuatrimestre:</label>
+                        <select id="selectCuatrimestre" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm mt-1">
+                            <option value="">Todos</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[17px] font-medium text-gray-700">Grupo:</label>
+                        <select id="selectGrupo" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm mt-1">
+                            <option value="">Todos</option>
+                        </select>
+                    </div>
+                </div>
+                <button id="btnAplicarFiltros" class="mt-4 text-white px-4 py-2 rounded-md w-full">Aplicar Filtros</button>
+            </div>
 
-        <!-- Selección de Nuevo Periodo -->
-        <div class="mb-6">
-            <label class="block text-[17px] font-medium text-gray-700">Nuevo Periodo:</label>
-            <select id="selectNuevoPeriodo" style="width: 300px;" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                <option value="">Seleccione un periodo</option>
-            </select>
-            <button id="btnAsignar" class="text-white px-4 py-2 rounded-md ml-2">Asignar</button>
+            <!-- Periodo Anterior -->
+            <div class="filter-section">
+                <div class="mb-4">
+                    <label class="block text-[17px] font-medium text-gray-700">Periodo Anterior:</label>
+                    <div class="mt-1 flex items-center gap-2">
+                        <select id="selectPeriodo" style="width: 300px;" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            <option value="">Seleccione un periodo</option>
+                            <option value="sin_asignar">Sin asignar</option>
+                        </select>
+                        <button id="btnBuscarAlumnos" class="text-white px-4 py-2 rounded-md">Buscar Alumnos</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lista de Alumnos -->
+            <table id="tablaAlumnos" class="min-w-full bg-white border border-gray-200 mb-6">
+                <thead>
+                    <tr>
+                        <th class="py-3 px-4 border-b text-left">Seleccionar</th>
+                        <th class="py-3 px-4 border-b text-left">Nombre</th>
+                        <th class="py-3 px-4 border-b text-left">Apellidos</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+            <!-- Nuevo Periodo -->
+            <div class="filter-section">
+                <div class="mb-4">
+                    <label class="block text-[17px] font-medium text-gray-700">Nuevo Periodo:</label>
+                    <div class="mt-1 flex items-center gap-2">
+                        <select id="selectNuevoPeriodo" style="width: 300px;" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            <option value="">Seleccione un periodo</option>
+                        </select>
+                        <button id="btnAsignar" class="text-white px-4 py-2 rounded-md">Asignar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
-        // resources/views/asignacion/index.blade.php
-
-$(document).ready(function() {
-    // Cargar Periodos al hacer clic en "Buscar"
-    $('#btnCargarPeriodos').click(function() {
-        let idCarrera = $('#selectCarrera').val(); // Obtener el ID de la carrera seleccionada
-
-        // Verificar que se haya seleccionado una carrera
-        if (!idCarrera) {
-            alert('Seleccione una carrera.');
-            return;
-        }
-
-        // Hacer la petición AJAX para obtener los periodos
-        $.get(`/asignacion/periodos/${idCarrera}`, function(data) {
-            // Limpiar y cargar los periodos en el listbox
-            $('#selectPeriodo').empty().append('<option value="">Seleccione un periodo</option>');
-            $('#selectNuevoPeriodo').empty().append('<option value="">Seleccione un periodo</option>');
-            data.forEach(periodo => {
-                $('#selectPeriodo').append(`<option value="${periodo.idperiodo}">${periodo.nombre}</option>`);
-                $('#selectNuevoPeriodo').append(`<option value="${periodo.idperiodo}">${periodo.nombre}</option>`);
-            });
-        }).fail(function(error) {
-            alert('Error al cargar los periodos: ' + error.responseJSON.message);
-        });
-    });
-});
-
-            // Cargar Periodos al hacer clic en "Buscar"
-$('#btnCargarPeriodos').click(function() {
-    let idCarrera = $('#selectCarrera').val();
+        $(document).ready(function() {
+            // Cargar Filtros
+            $('#btnCargarFiltros').click(function() {
+    const idCarrera = $('#selectCarrera').val();
+    
+    // Cargar filtros y periodos
+    cargarFiltros(idCarrera);
+    
+    // Cargar TODOS los periodos para nuevo periodo
     $.get(`/asignacion/periodos/${idCarrera}`, function(data) {
-        $('#selectPeriodo').empty().append('<option value="">Seleccione un periodo</option>');
         $('#selectNuevoPeriodo').empty().append('<option value="">Seleccione un periodo</option>');
         data.forEach(periodo => {
-            $('#selectPeriodo').append(`<option value="${periodo.idperiodo}">${periodo.nombre}</option>`);
             $('#selectNuevoPeriodo').append(`<option value="${periodo.idperiodo}">${periodo.nombre}</option>`);
         });
     });
 });
 
-            // Buscar Alumnos
-            $('#btnBuscar').click(function() {
-                let idPeriodo = $('#selectPeriodo').val();
-                $.get(`/asignacion/alumnos/${idPeriodo}`, function(data) {
-                    $('#tablaAlumnos tbody').empty();
-                    data.forEach(alumno => {
-                        $('#tablaAlumnos tbody').append(`
-                            <tr>
-                                <td><input type="checkbox" class="chkAlumno" value="${alumno.idalumno}"></td>
-                                <td>${alumno.nombre}</td>
-                                <td>${alumno.apellidoP} ${alumno.apellidoM}</td>
-                            </tr>
-                        `);
+            // Función para cargar filtros
+            function cargarFiltros(idCarrera) {
+                // Cargar cuatrimestres
+                $.get(`/asignacion/cuatrimestres/${idCarrera}`, function(data) {
+                    $('#selectCuatrimestre').empty().append('<option value="">Todos</option>');
+                    data.forEach(cuatrimestre => {
+                        $('#selectCuatrimestre').append(`<option value="${cuatrimestre}">${cuatrimestre}</option>`);
                     });
                 });
-            });
 
-           
-$('#btnAsignar').click(function() {
-    let alumnos = [];
-    $('.chkAlumno:checked').each(function() {
-        alumnos.push($(this).val());
-    });
+                // Cargar grupos
+                $.get(`/asignacion/grupos/${idCarrera}`, function(data) {
+                    $('#selectGrupo').empty().append('<option value="">Todos</option>');
+                    data.forEach(grupo => {
+                        $('#selectGrupo').append(`<option value="${grupo}">${grupo}</option>`);
+                    });
+                });
+            }
 
-    let nuevoPeriodo = $('#selectNuevoPeriodo').val();
-
-    if (alumnos.length === 0) {
-        alert('Seleccione al menos un alumno.');
-        return;
-    }
-
-    if (!nuevoPeriodo) {
-        alert('Seleccione un nuevo periodo.');
-        return;
-    }
-
-    $.post('/asignacion/asignar', {
-        alumnos: alumnos,
-        nuevo_periodo: nuevoPeriodo,
-        _token: '{{ csrf_token() }}'
-    }, function(response) {
-        if (response.success) {
-            alert(response.message);
-            // Recargar la lista de alumnos
-            $('#btnBuscar').click();
-        } else {
-            alert(response.message);
-        }
-    }).fail(function(error) {
-        alert('Error de conexión: ' + error.responseJSON.message);
+            $('#btnAplicarFiltros').click(function() {
+    const idCarrera = $('#selectCarrera').val();
+    
+    // Solo actualizar periodo anterior
+    $.get(`/asignacion/periodos/${idCarrera}`, {
+        cuatrimestre: $('#selectCuatrimestre').val(),
+        grupo: $('#selectGrupo').val()
+    }, function(data) {
+        $('#selectPeriodo').empty().append('<option value="">Seleccione un periodo</option>');
+        $('#selectPeriodo').append('<option value="sin_asignar">Sin asignar</option>');
+        data.forEach(periodo => {
+            $('#selectPeriodo').append(`<option value="${periodo.idperiodo}">${periodo.nombre}</option>`);
+        });
     });
 });
+
+            // Función para cargar periodos
+function cargarPeriodos(idCarrera) {
+    const cuatrimestre = $('#selectCuatrimestre').val();
+    const grupo = $('#selectGrupo').val();
+
+    // Cargar periodos FILTRADOS para periodo anterior
+    $.get(`/asignacion/periodos/${idCarrera}`, {
+        cuatrimestre: cuatrimestre,
+        grupo: grupo
+    }, function(data) {
+        $('#selectPeriodo').empty().append('<option value="">Seleccione un periodo</option>');
+        $('#selectPeriodo').append('<option value="sin_asignar">Sin asignar</option>');
+        data.forEach(periodo => {
+            $('#selectPeriodo').append(`<option value="${periodo.idperiodo}">${periodo.nombre}</option>`);
+        });
+    });
+
+    // Cargar TODOS los periodos para nuevo periodo
+    $.get(`/asignacion/periodos/${idCarrera}`, function(data) {
+        $('#selectNuevoPeriodo').empty().append('<option value="">Seleccione un periodo</option>');
+        data.forEach(periodo => {
+            $('#selectNuevoPeriodo').append(`<option value="${periodo.idperiodo}">${periodo.nombre}</option>`);
+        });
+    });
+}
+
+            // Buscar alumnos
+            $('#btnBuscarAlumnos').click(function() {
+                const idPeriodo = $('#selectPeriodo').val();
+                const idCarrera = $('#selectCarrera').val();
+
+                if (idPeriodo === "sin_asignar") {
+                    $.get(`/asignacion/alumnos-sin-asignar/${idCarrera}`, function(data) {
+                        mostrarAlumnos(data);
+                    });
+                } else {
+                    $.get(`/asignacion/alumnos/${idPeriodo}`, function(data) {
+                        mostrarAlumnos(data);
+                    });
+                }
+            });
+
+            // Mostrar alumnos en tabla
+            function mostrarAlumnos(alumnos) {
+                $('#tablaAlumnos tbody').empty();
+                alumnos.forEach(alumno => {
+                    $('#tablaAlumnos tbody').append(`
+                        <tr>
+                            <td class="py-2 px-4 border-b"><input type="checkbox" class="chkAlumno" value="${alumno.idalumno}"></td>
+                            <td class="py-2 px-4 border-b">${alumno.nombre}</td>
+                            <td class="py-2 px-4 border-b">${alumno.apellidoP} ${alumno.apellidoM}</td>
+                        </tr>
+                    `);
+                });
+            }
+
+            // Asignar alumnos
+            $('#btnAsignar').click(function() {
+                const alumnos = $('.chkAlumno:checked').map((i, el) => el.value).get();
+                const nuevoPeriodo = $('#selectNuevoPeriodo').val();
+
+                if (!alumnos.length || !nuevoPeriodo) {
+                    alert('Seleccione al menos un alumno y un periodo válido');
+                    return;
+                }
+
+                $.post('/asignacion/asignar', {
+                    alumnos: alumnos,
+                    nuevo_periodo: nuevoPeriodo,
+                    _token: '{{ csrf_token() }}'
+                }, function(response) {
+                    if (response.success) {
+                        alert('Asignación exitosa!');
+                        $('#btnBuscarAlumnos').click();
+                    }
+                }).fail(function(error) {
+                    alert('Error: ' + error.responseJSON.message);
+                });
+            });
+        });
     </script>
 </body>
 </html>
