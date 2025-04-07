@@ -22,6 +22,7 @@
 
         body {
             font-family: 'Crimson Text', serif;
+            color: #000000;
         }
 
         button {
@@ -62,7 +63,7 @@
             <div class="filter-section">
                 <!-- Selección de Carrera -->
                 <div class="mb-4">
-                    <label class="block text-[17px] font-medium text-gray-700">Carrera:</label>
+                    <label class="block text-[17px] font-medium text-gray-900">Carrera:</label>
                     <div class="mt-1 flex items-center gap-2">
                         <select id="selectCarrera" style="width: 330px;" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                             @foreach($carreras as $carrera)
@@ -74,27 +75,27 @@
                 </div>
 
                 <!-- Filtros Adicionales -->
-                <div class="grid grid-cols-2 gap-4 mt-4">
+                <div class="grid grid-cols-4 gap-4 mt-4">
                     <div>
-                        <label class="block text-[17px] font-medium text-gray-700">Cuatrimestre:</label>
-                        <select id="selectCuatrimestre" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm mt-1">
+                        <label class="block text-[17px] font-medium text-gray-900">Cuatrimestre:</label>
+                        <select id="selectCuatrimestre" class="w-27 px-3 py-2 border border-gray-300 rounded-md shadow-sm mt-1">
                             <option value="">Todos</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-[17px] font-medium text-gray-700">Grupo:</label>
-                        <select id="selectGrupo" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm mt-1">
+                        <label class="block text-[17px] font-medium text-gray-900">Grupo:</label>
+                        <select id="selectGrupo" class="w-27 px-3 py-2 border border-gray-300 rounded-md shadow-sm mt-1">
                             <option value="">Todos</option>
                         </select>
                     </div>
                 </div>
-                <button id="btnAplicarFiltros" class="mt-4 text-white px-4 py-2 rounded-md w-full">Aplicar Filtros</button>
+                <button id="btnAplicarFiltros" class="mt-4 text-white px-4 py-2 rounded-md">Aplicar Filtros</button>
             </div>
 
             <!-- Periodo Anterior -->
             <div class="filter-section">
                 <div class="mb-4">
-                    <label class="block text-[17px] font-medium text-gray-700">Periodo Anterior:</label>
+                    <label class="block text-[17px] font-medium text-gray-900">Periodo Anterior:</label>
                     <div class="mt-1 flex items-center gap-2">
                         <select id="selectPeriodo" style="width: 300px;" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                             <option value="">Seleccione un periodo</option>
@@ -120,7 +121,7 @@
             <!-- Nuevo Periodo -->
             <div class="filter-section">
                 <div class="mb-4">
-                    <label class="block text-[17px] font-medium text-gray-700">Nuevo Periodo:</label>
+                    <label class="block text-[17px] font-medium text-gray-900">Nuevo Periodo:</label>
                     <div class="mt-1 flex items-center gap-2">
                         <select id="selectNuevoPeriodo" style="width: 300px;" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                             <option value="">Seleccione un periodo</option>

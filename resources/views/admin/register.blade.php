@@ -81,42 +81,42 @@
 
         <!-- Nombre -->
         <div class="mb-4">
-            <label for="nombre" class="block text-[17px] font-medium text-gray-700">Nombre:</label>
+            <label for="nombre" class="block text-[17px] font-medium text-black">Nombre:</label>
             <input type="text" name="nombre" placeholder="Ingrese su nombre completo" required
                 class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
         </div>
 
         <!-- ApellidoP -->
         <div class="mb-4">
-            <label for="apellidoP" class="block text-[17px] font-medium text-gray-700">Apellido Paterno:</label>
+            <label for="apellidoP" class="block text-[17px] font-medium text-black">Apellido Paterno:</label>
             <input type="text" name="apellidoP" placeholder="Ingrese su apellido" required
                 class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
         </div>
 
         <!-- ApellidoM -->
         <div class="mb-4">
-            <label for="apellidoM" class="block text-[17px] font-medium text-gray-700">Apellido Materno:</label>
+            <label for="apellidoM" class="block text-[17px] font-medium text-black">Apellido Materno:</label>
             <input type="text" name="apellidoM" placeholder="Ingrese su apellido" required
                 class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
         </div>
 
         <!-- Correo -->
         <div class="mb-4">
-            <label for="correo" class="block text-[17px] font-medium text-gray-700">Correo electrónico:</label>
+            <label for="correo" class="block text-[17px] font-medium text-black">Correo electrónico:</label>
             <input type="email" name="correo" placeholder="Ingrese su correo electrónico" required
             class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
         </div>
 
         <!-- Alias -->
         <div class="mb-4">
-            <label for="alias" class="block text-[17px] font-medium text-gray-700">Alias:</label>
+            <label for="alias" class="block text-[17px] font-medium text-black">Alias:</label>
             <input type="text" name="alias" placeholder="Ingrese un alias único" required
             class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
         </div>
 
         <!-- Foto -->
         <div class="mb-4">
-            <label for="foto" class="block text-[17px] font-medium text-gray-700">Foto:</label>
+            <label for="foto" class="block text-[17px] font-medium text-black">Foto:</label>
             <div class="mt-1 flex items-center">
                 <div class="relative">
 
@@ -139,7 +139,7 @@
 
         <!-- Nivel de Acceso -->
         <div class="mb-4">
-            <label for="nivel" class="block text-[17px] font-medium text-gray-700">Nivel de Acceso:</label>
+            <label for="nivel" class="block text-[17px] font-medium text-black">Nivel de Acceso:</label>
             <select name="nivel" id="nivel" required
             class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
             <option value="" disabled selected>Seleccione su nivel de acceso</option>
@@ -152,7 +152,7 @@
 
         <!-- Contraseña -->
         <div class="mb-4">
-            <label for="password" class="block text-[17px] font-medium text-gray-700">Contraseña:</label>
+            <label for="password" class="block text-[17px] font-medium text-black">Contraseña:</label>
             <input type="password" name="password" placeholder="Ingresa una contraseña segura" required
                 class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
         </div>
