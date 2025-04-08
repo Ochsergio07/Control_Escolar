@@ -4,6 +4,44 @@
     <title>Asignación de Periodos</title>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    
+    <style>
+        .captcha-container {
+            margin: 1rem 0;
+            padding: 1rem;
+            background: #f5f5f5;
+            border-radius: 8px;
+            display: inline-block;
+        }
+        
+        .captcha-code {
+            font-family: 'Courier New', monospace;
+            font-size: 1.5rem;
+            letter-spacing: 0.5rem;
+            padding: 0.5rem;
+            background: #fff;
+            border: 2px dashed #ccc;
+            display: inline-block;
+            margin-right: 1rem;
+        }
+        
+        .captcha-input {
+            padding: 0.5rem;
+            font-size: 1rem;
+            width: 150px;
+            margin-top: 0.5rem;
+        }
+        
+        .btn-captcha {
+            background-color: #4CAF50 !important;
+            margin-left: 0.5rem;
+        }
+        
+        .btn-captcha:hover {
+            background-color: #45a049 !important;
+        }
+    </style>
+
     <style>
         .titulo-con-fondo {
             font-size: 2rem;
@@ -126,6 +164,21 @@
                         <select id="selectNuevoPeriodo" style="width: 300px;" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                             <option value="">Seleccione un periodo</option>
                         </select>
+
+                        <!-- Agrega esto antes del botón de Asignar -->
+<div class="captcha-container">
+    <div class="mb-4">
+        <label class="block text-[17px] font-medium text-gray-700">Verificación de Seguridad</label>
+        <div class="mt-2 flex items-center">
+            <span id="captchaAsignacion" class="captcha-code"></span>
+            <button type="button" onclick="generarCaptcha('asignacion')" class="btn-captcha text-white px-3 py-2 rounded-md">
+                ↻ Actualizar
+            </button>
+        </div>
+        <input type="text" id="captchaInputAsignacion" class="captcha-input mt-2" placeholder="Ingrese el código mostrado" required>
+    </div>
+</div>
+
                         <button id="btnAsignar" class="text-white px-4 py-2 rounded-md">Asignar</button>
                     </div>
                 </div>
@@ -244,8 +297,14 @@ function cargarPeriodos(idCarrera) {
                 });
             }
 
+
             // Asignar alumnos
             $('#btnAsignar').click(function() {
+                if(!validarCaptcha('asignacion')) {
+        $('#captchaErrorAsignacion').text('Código incorrecto, intente nuevamente');
+        generarCaptcha('asignacion');
+        return false;
+    }
                 const alumnos = $('.chkAlumno:checked').map((i, el) => el.value).get();
                 const nuevoPeriodo = $('#selectNuevoPeriodo').val();
 
@@ -269,5 +328,63 @@ function cargarPeriodos(idCarrera) {
             });
         });
     </script>
+
+<script>
+    // Generar CAPTCHA inicial
+    let captchaRegistro = '';
+    let captchaAsignacion = '';
+
+    function generarCaptcha(tipo) {
+        const numeros = '0123456789';
+        let codigo = '';
+        for(let i = 0; i < 4; i++) {
+            codigo += numeros[Math.floor(Math.random() * numeros.length)];
+        }
+        
+        if(tipo === 'registro') {
+            captchaRegistro = codigo;
+            document.getElementById('captchaRegistro').textContent = codigo;
+        } else {
+            captchaAsignacion = codigo;
+            document.getElementById('captchaAsignacion').textContent = codigo;
+        }
+    }
+
+    // Generar CAPTCHA al cargar la página
+    window.onload = function() {
+        generarCaptcha('registro');
+        generarCaptcha('asignacion');
+    }
+
+    // Validación genérica
+    function validarCaptcha(tipo) {
+        const input = tipo === 'registro' 
+            ? document.getElementById('captchaInputRegistro').value
+            : document.getElementById('captchaInputAsignacion').value;
+            
+        const codigoCorrecto = tipo === 'registro' ? captchaRegistro : captchaAsignacion;
+
+        if(input !== codigoCorrecto) {
+            alert('El código de verificación es incorrecto. Por favor intente de nuevo.');
+            generarCaptcha(tipo);
+            return false;
+        }
+        return true;
+    }
+</script>
+<script>
+    // Esperar a que todo el documento esté listo
+    $(function() {
+        // Generar primer CAPTCHA
+        generarCaptcha('asignacion');
+        
+        // Configurar evento para el botón de actualizar
+        $('.btn-captcha').click(function() {
+            const tipo = $(this).attr('onclick').match(/'(\w+)'/)[1];
+            generarCaptcha(tipo);
+        });
+    });
+</script>
+
 </body>
 </html>

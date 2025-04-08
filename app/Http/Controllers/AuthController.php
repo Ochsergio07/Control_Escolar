@@ -57,24 +57,26 @@ class AuthController extends Controller
     }
 
     // Procesar el inicio de sesión
-    public function login(Request $request)
-    {
-        $request->validate([
-            'alias' => 'required|string|max:50',
-            'password' => 'required|string|max:50',
-        ]);
+public function login(Request $request)
+{
+    $request->validate([
+        'alias' => 'required|string|max:50',
+        'password' => 'required|string|max:50',
+    ]);
 
-        // Buscar al administrador por su alias
-        $admin = Admin::where('alias', $request->alias)->first();
+    // Buscar al administrador por su alias
+    $admin = Admin::where('alias', $request->alias)->first();
 
-        // Verificar la contraseña
-        if ($admin && Hash::check($request->password, $admin->password)) {
-            // Inicio de sesión exitoso
-            session(['admin' => $admin]); // Guardar el administrador en la sesión
-            return redirect()->route('admin.dashboard')->with('success', 'Inicio de sesión exitoso!');
-        }
-
-        // Credenciales incorrectas
-        return back()->withErrors(['alias' => 'Credenciales incorrectas']);
+    // Verificar la contraseña
+    if ($admin && Hash::check($request->password, $admin->password)) {
+        // Inicio de sesión exitoso
+        session(['admin' => $admin]);
+        return redirect()->route('admin.dashboard')->with('success', 'Inicio de sesión exitoso!');
     }
+
+    // Credenciales incorrectas - Mensaje mejorado
+    return back()
+           ->withInput($request->only('alias')) // Mantiene el valor del alias
+           ->with('error', 'Usuario o contraseña incorrectos'); // Mensaje general
+}
 }
