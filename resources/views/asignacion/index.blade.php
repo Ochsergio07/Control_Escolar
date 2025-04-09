@@ -136,7 +136,7 @@
                     <label class="block text-[17px] font-medium text-gray-900">Periodo Anterior:</label>
                     <div class="mt-1 flex items-center gap-2">
                         <select id="selectPeriodo" style="width: 300px;" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                            <option value="">Seleccione un periodo</option>
+                            <option value="" disabled selected>Seleccione un periodo</option>
                             <option value="sin_asignar">Sin asignar</option>
                         </select>
                         <button id="btnBuscarAlumnos" class="text-white px-4 py-2 rounded-md">Buscar Alumnos</button>
@@ -159,10 +159,10 @@
             <!-- Nuevo Periodo -->
             <div class="filter-section">
                 <div class="mb-4">
-                    <label class="block text-[17px] font-medium text-gray-900">Nuevo Periodo:</label>
+                    <label class="block text-[17px] font-medium text-gray-900">Nuevo Periodo</label>
                     <div class="mt-1 flex items-center gap-2">
                         <select id="selectNuevoPeriodo" style="width: 300px;" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                            <option value="">Seleccione un periodo</option>
+                            <option value="" disabled selected>Seleccione un periodo</option>
                         </select>
 
                         <!-- Agrega esto antes del botón de Asignar -->
@@ -171,11 +171,11 @@
         <label class="block text-[17px] font-medium text-gray-700">Verificación de Seguridad</label>
         <div class="mt-2 flex items-center">
             <span id="captchaAsignacion" class="captcha-code"></span>
-            <button type="button" onclick="generarCaptcha('asignacion')" class="btn-captcha text-white px-3 py-2 rounded-md">
+            <button type="button" onclick="generarCaptcha('asignacion')" class=" text-white px-3 py-2 rounded-md">
                 ↻ Actualizar
             </button>
         </div>
-        <input type="text" id="captchaInputAsignacion" class="captcha-input mt-2" placeholder="Ingrese el código mostrado" required>
+        <input type="text" id="captchaInputAsignacion" class="captcha-input mt-2" placeholder="Ingrese el código" required>
     </div>
 </div>
 

@@ -77,6 +77,6 @@ public function login(Request $request)
     // Credenciales incorrectas - Mensaje mejorado
     return back()
            ->withInput($request->only('alias')) // Mantiene el valor del alias
-           ->with('error', 'Usuario o contraseña incorrectos'); // Mensaje general
+           ->with ('error', 'Usuario o contraseña incorrectos'); // Mensaje general
 }
 }

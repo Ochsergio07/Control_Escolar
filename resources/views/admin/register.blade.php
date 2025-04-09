@@ -164,7 +164,7 @@
             <input type="file" id="foto" name="foto" accept="image/*" class="hidden" onchange="mostrarVistaPrevia(event)">
             
         <!-- Botón personalizado -->
-            <label for="foto" class="absolute bottom-0 right-0 bg-blue-500 text-white p-1 rounded-full cursor-pointer hover:bg-blue-600">
+            <label for="foto" class="absolute bottom-0 right-0 bg-blue-900 text-white p-1 rounded-full cursor-pointer hover:bg-blue-900">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
      </svg>
@@ -197,14 +197,14 @@
         <!-- Agrega esto antes del botón de Registrar -->
 <div class="captcha-container">
     <div class="mb-4">
-        <label class="block text-[17px] font-medium text-gray-700">Verificación de Seguridad</label>
+        <label class="block text-[17px] font-medium">Verificación de Seguridad</label>
         <div class="mt-2 flex items-center">
             <span id="captchaRegistro" class="captcha-code"></span>
-            <button type="button" onclick="generarCaptcha('registro')" class="btn-captcha text-white px-3 py-2 rounded-md">
+            <button type="button" onclick="generarCaptcha('registro')" class=" text-white px-3 py-2 rounded-md">
                 ↻ Actualizar
             </button>
         </div>
-        <input type="text" id="captchaInputRegistro" class="captcha-input mt-2" placeholder="Ingrese el código mostrado" required>
+        <input type="text" id="captchaInputRegistro" class="captcha-input mt-2" placeholder="Ingrese el código" required>
     </div>
 </div>
 
