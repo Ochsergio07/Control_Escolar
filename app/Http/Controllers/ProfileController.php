@@ -2,59 +2,43 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
+use Illuminate\Support\Facades\Hash;
+use App\Models\Alumno;
+use App\Models\Docente;
 
-class ProfileController extends Controller
+class AuthController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
-    public function edit(Request $request): View
+    public function showLoginForm()
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+        return view('login');
     }
 
-    /**
-     * Update the user's profile information.
-     */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function login(Request $request)
     {
-        $request->user()->fill($request->validated());
+        $nombre = $request->input('nombre');
+        $password = $request->input('password');
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        $alumno = Alumno::where('email', $nombre)->first();
+        if ($alumno && Hash::check($password, $alumno->password)) {
+
+            session(['user' => $alumno, 'role' => 'alumno']);
+            return redirect()->intended('menu');
         }
 
-        $request->user()->save();
+        $docente = Docente::where('nombre', $nombre)->first();
+        if ($docente && Hash::check($password, $docente->password)) {
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+            session(['user' => $docente, 'role' => 'docente']);
+            return redirect()->intended('menu');
+        }
+
+        return back()->withErrors(['nombre' => 'Nombre o contraseña incorrectos']);
     }
 
-    /**
-     * Delete the user's account.
-     */
-    public function destroy(Request $request): RedirectResponse
+    public function logout()
     {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
-
-        $user = $request->user();
-
-        Auth::logout();
-
-        $user->delete();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return Redirect::to('/');
+        session()->forget(['user', 'role']);
+        return redirect('/');
     }
 }
